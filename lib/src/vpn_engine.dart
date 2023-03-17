@@ -180,10 +180,12 @@ class OpenVPN {
             );
           } else if (Platform.isAndroid) {
             var data = jsonDecode(value);
-            var connectedOn =
-                DateTime.tryParse(data["connected_on"].toString()) ??
-                    _tempDateTime;
-            String byteIn =
+            var connectedOn = DateTime.tryParse(
+                    data["connected_on"].toString()) ??
+                DateTime
+                    .now();
+
+	    String byteIn =
                 data["byte_in"] != null ? data["byte_in"].toString() : "0";
             String byteOut =
                 data["byte_out"] != null ? data["byte_out"].toString() : "0";
@@ -192,7 +194,7 @@ class OpenVPN {
             return VpnStatus(
               connectedOn: connectedOn,
               duration:
-                  _duration(DateTime.now().difference(connectedOn!).abs()),
+                  _duration(DateTime.now().difference(connectedOn).abs()),
               byteIn: byteIn,
               byteOut: byteOut,
               packetsIn: byteIn,
